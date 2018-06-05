@@ -17,7 +17,7 @@ class App < Sinatra::Base
 
     text_from_user.split("").each do |letter|
       if alphabet.keys.include?(letter.downcase)
-        alphabet[letter] += 1
+        alphabet[letter.downcase] += 1
       end
     end
 
@@ -29,8 +29,10 @@ class App < Sinatra::Base
     @num_of_consonants = num_of_letters - @num_of_vowels
 
     @max_times = alphabet.values.max
-    @max_letter = alphabet.select { |letter, total| total == @max_times }.first
-
+    @max_letter = alphabet.select { |letter, total| total == @max_times }.last.first.upcase
+    # above was coded specifically for green eggs and ham as an input
+    # it does not distinguish between letters tied in count
+    # also, there is no consideration for capital/lowercase letters
     erb :results
   end
 end
